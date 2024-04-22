@@ -1,0 +1,2 @@
+run_accession,sample_id,analysis_file
+SRR########,SAMN#######,analysed/example.fasta

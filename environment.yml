@@ -1,0 +1,60 @@
+# You can use this file to create a conda environment for this pipeline:
+#   conda env create -f environment.yml
+name: ENA-localdatahub-1.0
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - _openmp_mutex=5.1=1_gnu
+  - blas=1.0=mkl
+  - bottleneck
+  - brotli-python
+  - bzip2
+  - ca-certificates
+  - certifi
+  - charset-normalizer
+  - expat
+  - icu
+  - idna
+  - intel-openmp
+  - ld_impl_linux-64
+  - libffi
+  - libgcc-ng
+  - libgomp
+  - libstdcxx-ng
+  - libuuid
+  - libxml2
+  - libxslt
+  - lxml
+  - mkl
+  - mkl-service
+  - mkl_fft
+  - mkl_random
+  - ncurses
+  - numexpr
+  - numpy
+  - numpy-base
+  - openssl
+  - pandas
+  - pip
+  - pysocks
+  - python
+  - python-dateutil
+  - python-tzdata
+  - pytz
+  - pyyaml
+  - readline
+  - requests
+  - setuptools
+  - six
+  - sqlite
+  - tbb
+  - tk
+  - tzdata
+  - urllib3
+  - wheel
+  - xz
+  - yaml
+  - zlib
+    # TODO: Add required software dependencies here

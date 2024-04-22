@@ -1,0 +1,3 @@
+run_accession,sample_id,file_name
+SRR########,SAMN#######,example.fastq.gz
+
