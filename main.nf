@@ -71,8 +71,8 @@ assert params.webin_username, "Parameter 'analysis_username' is not specified"
 assert params.webin_password, "Parameter 'analysis_password' is not specified"
 assert params.analysisConfig_location, "Parameter 'analysisConfig_location' is not specified"
 assert params.ignore_list, "Parameter 'ignore_list' is not specified"
-assert params.test.toString().toLowerCase() == 'true' || params.toString().asynchronous.toLowerCase() == 'false',  "Parameter 'test' is invalid, please specify one of the options(true or false)"
-assert params.asynchronous.toString().toLowerCase() == 'true' || params.toString().asynchronous.toLowerCase() == 'false',  "Parameter 'asynchronous' is invalid, please specify one of the options(true or false)"
+assert params.test.toString().toLowerCase() == 'true' || params.test.toString().toLowerCase() == 'false',  "Parameter 'test' is invalid, please specify one of the options(true or false)"
+assert params.asynchronous.toString().toLowerCase() == 'true' || params.asynchronous.toString().toLowerCase() == 'false',  "Parameter 'asynchronous' is invalid, please specify one of the options(true or false)"
 
 
 
