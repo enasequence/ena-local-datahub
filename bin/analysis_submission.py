@@ -277,7 +277,6 @@ class upload_and_submit:
             command = 'curl -u {}:{} -X POST -H "accept: */*"  -H "Content-Type: multipart/form-data" -F "file=@{}_{}.xml;type=txt/xml" "https://www.ebi.ac.uk/ena/submit/webin-v2/{}"'.format(
                 self.analysis_username, self.analysis_password, webin_loc,
                 self.datestamp, self.api_service)
-        safe_command = command.replace(self.analysis_password, "***REDACTED***")
         sp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = sp.communicate()
 
@@ -287,7 +286,7 @@ class upload_and_submit:
         elif self.api_service == 'submit/queue':
             accession = self.retrieve_json_info(out, err, attempts, webin_loc)          # Submission ID is retrieved which needs to be polled
 
-        return command, safe_command, out
+        return command, out
 
     def submit_data(self):
         """
@@ -300,10 +299,9 @@ class upload_and_submit:
         # Attempt the submission according to whether the upload was successful
         if not errors:
             attempts = 0
-            command, safe_command, out = self.submission(attempts)
+            command, out = self.submission(attempts)
             print("-" * 100)
-            print("CURL submission command: \n")
-            print(safe_command)
+            print("Submission request sent to ENA.")
             print("Returned output: \n")
             print(out.decode())
             print("-" * 100)
