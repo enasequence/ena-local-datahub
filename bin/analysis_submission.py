@@ -142,10 +142,12 @@ class upload_and_submit:
         for file in self.analysis_file:
             command = "curl -T {}  ftp://webin.ebi.ac.uk --user {}:{}".format(file.get('name'), self.analysis_username, self.analysis_password)         # Command to upload file to Webin
             md5downloaded = "curl -s ftp://webin.ebi.ac.uk/{} --user {}:{} | md5sum | cut -f1 -d ' '".format(os.path.basename(file.get('name')), self.analysis_username, self.analysis_password)       # Command to check the MD5 value for the submitted file
+            safe_command = command.replace(self.analysis_password, "***REDACTED***")
+            safe_md5downloaded = md5downloaded.replace(self.analysis_password, "***REDACTED***")
             md5uploaded = file.get('md5_value')         # The MD5 calculated before the file upload
             print('-' * 100)
-            print("CURL command:\n{}".format(command))
-            print("MD5 Download command:\n{}".format(md5downloaded))
+            print("CURL command:\n{}".format(safe_command))
+            print("MD5 Download command:\n{}".format(safe_md5downloaded))
             print("MD5 uploaded:\n{}".format(md5uploaded))
             print('-' * 100)
 
@@ -275,6 +277,7 @@ class upload_and_submit:
             command = 'curl -u {}:{} -X POST -H "accept: */*"  -H "Content-Type: multipart/form-data" -F "file=@{}_{}.xml;type=txt/xml" "https://www.ebi.ac.uk/ena/submit/webin-v2/{}"'.format(
                 self.analysis_username, self.analysis_password, webin_loc,
                 self.datestamp, self.api_service)
+        safe_command = command.replace(self.analysis_password, "***REDACTED***")
         sp = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = sp.communicate()
 
@@ -284,7 +287,7 @@ class upload_and_submit:
         elif self.api_service == 'submit/queue':
             accession = self.retrieve_json_info(out, err, attempts, webin_loc)          # Submission ID is retrieved which needs to be polled
 
-        return command, out
+        return command, safe_command, out
 
     def submit_data(self):
         """
@@ -297,10 +300,10 @@ class upload_and_submit:
         # Attempt the submission according to whether the upload was successful
         if not errors:
             attempts = 0
-            command, out = self.submission(attempts)
+            command, safe_command, out = self.submission(attempts)
             print("-" * 100)
             print("CURL submission command: \n")
-            print(command)
+            print(safe_command)
             print("Returned output: \n")
             print(out.decode())
             print("-" * 100)
