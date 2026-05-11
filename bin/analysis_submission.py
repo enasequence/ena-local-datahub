@@ -146,8 +146,8 @@ class upload_and_submit:
             safe_md5downloaded = md5downloaded.replace(self.analysis_password, "***REDACTED***")
             md5uploaded = file.get('md5_value')         # The MD5 calculated before the file upload
             print('-' * 100)
-            print("CURL command:\n{}".format(safe_command))
-            print("MD5 Download command:\n{}".format(safe_md5downloaded))
+            print("Preparing upload for file: {}".format(os.path.basename(file.get('name'))))
+            print("Preparing MD5 verification for uploaded file.")
             print("MD5 uploaded:\n{}".format(md5uploaded))
             print('-' * 100)
 
