@@ -129,6 +129,26 @@ class upload_and_submit:
         self.api_service = api_service
         self.test = test
 
+    def _sanitize_output(self, text):
+        """
+        Redact sensitive credentials from text prior to logging.
+        :param text: Text to sanitize
+        :return: Sanitized text
+        """
+        sanitized = text
+        if self.analysis_username and self.analysis_password:
+            sanitized = sanitized.replace(
+                "{}:{}".format(self.analysis_username, self.analysis_password),
+                "{}:[REDACTED]".format(self.analysis_username)
+            )
+        if self.analysis_password:
+            sanitized = sanitized.replace(self.analysis_password, "[REDACTED]")
+
+        # Redact common password/curl credential patterns in returned text.
+        sanitized = sanitized.replace("password=", "password=[REDACTED]")
+        sanitized = sanitized.replace("-u ", "-u [REDACTED] ")
+        return sanitized
+
     def upload_to_ENA(self, trialcount):
         """
         Upload data file(s) to ENA
@@ -303,7 +323,7 @@ class upload_and_submit:
             print("-" * 100)
             print("Submission request sent to ENA.")
             print("Returned output: \n")
-            print(out.decode())
+            print(self._sanitize_output(out.decode(errors='replace')))
             print("-" * 100)
         else:
             print("File upload errors detected, aborted file upload:\n {}".format(errors))
