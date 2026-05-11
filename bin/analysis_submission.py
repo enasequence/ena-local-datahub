@@ -322,8 +322,7 @@ class upload_and_submit:
             command, out = self.submission(attempts)
             print("-" * 100)
             print("Submission request sent to ENA.")
-            print("Returned output: \n")
-            print(self._sanitize_output(out.decode(errors='replace')))
+            print("Submission response received (content not logged to avoid exposing sensitive information).")
             print("-" * 100)
         else:
             print("File upload errors detected, aborted file upload:\n {}".format(errors))
